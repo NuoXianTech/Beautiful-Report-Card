@@ -9,6 +9,6 @@ if ($link) {
     header("Location: themes/$themes/"); // 跳转至相关页面
 } else {
     @mysqli_close ($link);
-    die ("Error establishing a database connection"); // 无法连接数据库抛出
+    die ("Error establishing a database connection."); // 无法连接数据库抛出
 }
 ?>
