@@ -1,27 +1,68 @@
----
-name: "pre-release"
+name: Auto Versioning
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [ main ]  # 触发分支
+  workflow_dispatch:    # 支持手动触发正式版发布
 
 jobs:
-  pre-release:
-    name: "Pre Release"
-    runs-on: "ubuntu-latest"
-
+  generate-prerelease:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'  # 非手动触发时执行
     steps:
-      - name: "Build & test"
-        run: |
-          echo "done!"
-
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Development Build"
-          files: |
-            LICENSE.txt
-            *.jar
+          fetch-depth: 0  # 获取完整提交历史
+
+      - name: Generate Pre-release Version
+        uses: paulhatch/semantic-version@v5.4.0
+        id: semver
+        with:
+          tag_prefix: "v"
+          version_format: "${major}.${minor}.${patch}-beta"  # 预发布格式
+          bump_each_commit: true  # 每次提交自动递增
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Version File
+        run: echo ${{ steps.semver.outputs.version }} > VERSION
+        # 可选：将版本号写入项目文件（如 package.json）
+
+      - name: Generate Changelog
+        uses: mikepenz/release-changelog-builder-action@v3
+        with:
+          configuration: |
+            { "categories": [ { "title": "What's Changed", "labels": ["enhancement"] } ] }
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit Changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add VERSION
+          git commit -m "chore: Bump version to ${{ steps.semver.outputs.version }}"
+          git push
+
+  release-production:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'  # 仅手动触发
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Remove Beta Tag
+        run: |
+          CURRENT_VERSION=$(cat VERSION)
+          RELEASE_VERSION=$(echo $CURRENT_VERSION | sed 's/-beta//')
+          echo $RELEASE_VERSION > VERSION
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v$(cat VERSION)
+          body: |
+            ${{ github.event.inputs.changelog || 'Production release' }}
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
