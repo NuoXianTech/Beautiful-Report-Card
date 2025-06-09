@@ -1,9 +1,9 @@
 
 <p align="center">
   <a href="https://github.com/nuoxi4n"><img alt="作者" src="https://img.shields.io/badge/Author-nuoxi4n-blueviolet"></a>
-  <a href="https://github.com/nuoxi4n/Beautiful-Report-Card"><img alt="文件大小" src="https://img.shields.io/github/repo-size/nuoxi4n/Beautiful-Report-Card"></a>
-  <a href="https://github.com/nuoxi4n/Beautiful-Report-Card/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/nuoxi4n/Beautiful-Report-Card"></a>
-  <a href="https://github.com/nuoxi4n/Beautiful-Report-Card/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/nuoxi4n/Beautiful-Report-Card?style=social"></a>
+  <a href="https://github.com/NuoXianTech/Beautiful-Report-Card"><img alt="文件大小" src="https://img.shields.io/github/repo-size/NuoXianTech/Beautiful-Report-Card"></a>
+  <a href="https://github.com/NuoXianTech/Beautiful-Report-Card/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/NuoXianTech/Beautiful-Report-Card"></a>
+  <a href="https://github.com/NuoXianTech/Beautiful-Report-Card/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/NuoXianTech/Beautiful-Report-Card?style=social"></a>
 </p>
 
 ## 学生电子成绩查询系统
