@@ -7,7 +7,7 @@ $header[] = "user-agent: nuoxi4n / Beautiful-Report-Card";
 $curl = curl_init();
 
 // 请求的网址
-curl_setopt($curl, CURLOPT_URL, "https://api.github.com/repositories/382715317/releases/latest");
+curl_setopt($curl, CURLOPT_URL, "https://api.github.com/repos/NuoXianTech/Beautiful-Report-Card/releases/latest");
 // 隐藏返回响应信息头
 curl_setopt($curl, CURLOPT_HEADER, false);
 // 请求标头
