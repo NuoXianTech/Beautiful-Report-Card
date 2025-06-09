@@ -47,9 +47,24 @@ jobs:
         with:
           ref: ${{ inputs.promote_from }}
 
+      - name: Install zip utility
+        run: sudo apt-get install -y zip
+
+      - name: Create release archive
+        id: create_zip
+        run: |
+          zip_name="${{ inputs.file_name }}-${{ steps.release.outputs.tag_name }}.zip"
+          
+          zip -r "${zip_name}" . \
+            -x "*.github*" \
+            -x "*.log*" \
+          
+          echo "zip_file=${zip_name}" >> $GITHUB_OUTPUT
+          echo "Created ${zip_name}"
+        if: steps.release.outputs.release_created == 'true'
+
       - name: Create release
         id: release
-        if: steps.test.outcome == 'success'
         uses: benwoo1110/semantic-release-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -58,10 +73,9 @@ jobs:
           promote_from: ${{ inputs.promote_from }}
 
       - name: Upload release artifact
-        if: steps.build.outcome == 'success'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ inputs.file_name }}-${{ steps.release.outputs.tag_name }}.zip
+          file: ${{ steps.create_zip.outputs.zip_file }}
           asset_name: ${{ inputs.file_name }}-${{ steps.release.outputs.tag_name }}.zip
           tag: ${{ steps.release.outputs.tag_name }}
