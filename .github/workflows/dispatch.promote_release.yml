@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Verify input version is prerelease
         run: |
-          if [[ "${{ github.event.inputs.target_tag }}" != *"beta"* ]]; then
+          if [[ "${{ github.event.inputs.target_tag }}" != *"pre"* ]]; then
               echo "Version must be a prerelease"
               exit 1
           fi
