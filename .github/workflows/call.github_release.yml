@@ -28,7 +28,7 @@ jobs:
     uses: ./.github/workflows/generic.github_release.yml
     secrets: inherit
     with:
-      plugin_name: Beautiful-Report-Card
+      file_name: Beautiful-Report-Card
       release_mode: ${{ inputs.release_mode }}
       version_bump: ${{ inputs.version_bump }}
       promote_from: ${{ inputs.promote_from }}

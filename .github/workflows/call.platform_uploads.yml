@@ -10,7 +10,7 @@ on:
 
 jobs:
   platform_uploads:
-    uses: ./.github/workflows/generic.platform_uploads.yml
+    uses: ./.github\workflows\generic.platform_uploads.yml
     secrets: inherit
     with:
       file_name: Beautiful-Report-Card
