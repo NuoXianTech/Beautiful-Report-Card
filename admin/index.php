@@ -17,8 +17,8 @@
     <title>学生电子成绩管理系统</title>
     <meta name="author" content="nuoxian">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-    <link rel="stylesheet" href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/mdui/1.0.2/css/mdui.min.css">
-    <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/mdui/1.0.2/js/mdui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/mdui/2.1.3/mdui.css">
+    <script src="https://cdnjs.loli.net/ajax/libs/mdui/2.1.3/mdui.global.js"></script>
     <script>$ = mdui.$;</script>
 </head>
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-drawer-body-left mdui-appbar-with-toolbar">
