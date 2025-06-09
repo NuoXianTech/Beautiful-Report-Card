@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Verify input version is prerelease
         run: |
-          if [[ "${{ github.event.inputs.target_tag }}" != *"pre"* ]]; then
+          if [[ "${{ github.event.inputs.target_tag }}" != *"beta"* ]]; then
               echo "Version must be a prerelease"
               exit 1
           fi
@@ -25,3 +25,11 @@ jobs:
     with:
       release_mode: promote
       promote_from: ${{ github.event.inputs.target_tag }}
+
+  platform_uploads:
+    needs: github_release
+    if: needs.github_release.outputs.release_created == 'true'
+    uses: ./.github/workflows/call.platform_uploads.yml
+    secrets: inherit
+    with:
+      target_tag: ${{ needs.github_release.outputs.tag_name }}
