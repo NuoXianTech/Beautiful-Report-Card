@@ -1,13 +1,13 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 $header[] = "Content-type: text/json";
-$header[] = "user-agent: nuoxian233 / Beautiful-Report-Card";
+$header[] = "user-agent: nuoxi4n / Beautiful-Report-Card";
 
 // 初始化Curl会话
 $curl = curl_init();
 
 // 请求的网址
-curl_setopt($curl, CURLOPT_URL, "https://api.github.com/repos/nuoxian233/Beautiful-Report-Card/releases/latest");
+curl_setopt($curl, CURLOPT_URL, "https://api.github.com/repositories/382715317/releases/latest");
 // 隐藏返回响应信息头
 curl_setopt($curl, CURLOPT_HEADER, false);
 // 请求标头
