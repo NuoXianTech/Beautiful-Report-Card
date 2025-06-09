@@ -1,0 +1,18 @@
+name: 'Call: Platform Uploads'
+
+on:
+  workflow_call:
+    inputs:
+      target_tag:
+        description: 'Version to upload'
+        required: true
+        type: string
+
+jobs:
+  platform_uploads:
+    uses: ./.github/workflows/generic.platform_uploads.yml
+    secrets: inherit
+    with:
+      file_name: Beautiful-Report-Card
+
+      target_tag: ${{ inputs.target_tag }}
