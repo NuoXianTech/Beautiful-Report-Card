@@ -1,0 +1,13 @@
+name: 'Main: Prerelease'
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  github_release_on_push:
+    uses: ./.github/workflows/call.github_release.yml
+    secrets: inherit
+    with:
+      release_mode: prerelease
+      version_bump: prlabel
