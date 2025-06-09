@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       target_tag:
-        description: 'Version to upload'
+        description: 'Version to upload.'
         required: true
         type: string
 
