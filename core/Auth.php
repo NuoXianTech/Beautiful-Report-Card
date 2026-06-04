@@ -9,7 +9,6 @@ namespace Core;
  * 未配置哈希时回退到明文 password（hash_equals 防时序攻击）。
  * 登录成功后重置 session id，防会话固定攻击。
  *
- * 这取代了旧版「Cookie 值 = md5(明文密码)」这种可预测、不可失效的脆弱方案。
  */
 class Auth
 {

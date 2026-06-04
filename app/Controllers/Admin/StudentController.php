@@ -8,7 +8,7 @@ use Core\Response;
 /**
  * 后台学生管理：列表、添加、编辑、删除。
  *
- * 全部写操作经预处理执行，并要求 CSRF 令牌；删除改用 POST（旧版是 GET，存在 CSRF 风险）。
+ * 全部写操作经预处理执行，并要求 CSRF 令牌；删除改用 POST。
  */
 class StudentController extends AdminController
 {

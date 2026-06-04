@@ -10,9 +10,9 @@ use PDO;
 use Throwable;
 
 /**
+ *
  * 后台首页：关于本系统 + 系统信息 + 检查更新。
  *
- * 相比旧版，去掉了把访客 IP 外链到第三方查询站的功能（避免泄露 IP）。
  */
 class DashboardController extends AdminController
 {

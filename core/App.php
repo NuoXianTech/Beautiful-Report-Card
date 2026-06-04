@@ -13,8 +13,8 @@ use Throwable;
  */
 class App
 {
-    /** 程序版本号，由框架维护（不放在用户配置文件中）。 */
-    const VERSION = '0.0.7';
+    /** 程序版本号，由框架维护。 */
+    const VERSION = '0.1.0';
 
     /** @var Router */
     private $router;

@@ -9,7 +9,7 @@ use PDOException;
  * 数据库访问层
  *
  * 基于 PDO，惰性建立单例连接，所有查询一律使用「预处理语句 + 绑定参数」，
- * 从根本上杜绝 SQL 注入——这正是旧版 inc/Query_info.php 字符串拼接 SQL 的替代方案。
+ *
  */
 class Database
 {

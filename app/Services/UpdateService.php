@@ -8,7 +8,6 @@ use Core\App;
  * 检查更新服务
  *
  * 调用 GitHub Releases API 获取最新版本，结果缓存到 storage/cache（默认 1 小时），
- * 避免像旧版那样每次打开后台都请求一次 API（未认证有 60 次/小时 的限速）。
  */
 class UpdateService
 {

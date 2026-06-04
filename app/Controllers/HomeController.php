@@ -23,7 +23,7 @@ class HomeController extends Controller
         $number = trim((string) $this->request->post('number', ''));
         $id     = trim((string) $this->request->post('id', ''));
 
-        // 基础校验。注意：防 SQL 注入靠预处理（见 Result 模型），不再需要旧版的敏感词黑名单。
+        // 基础校验。注意：防 SQL 注入靠预处理（见 Result 模型）
         if ($number === '' || $id === '') {
             return $this->formView(['error' => '请完整填写 考生号/准考证号 与 身份证号后六位。']);
         }

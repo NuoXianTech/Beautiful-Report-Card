@@ -3,7 +3,6 @@
  * 配置模板
  *
  * 复制本文件为 config/config.php，再按实际环境填写。
- * config.php 已被 .gitignore 忽略，不会提交到仓库，避免泄露数据库与后台密码。
  *
  */
 

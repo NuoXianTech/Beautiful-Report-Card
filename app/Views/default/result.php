@@ -3,7 +3,6 @@
  * 默认主题 - 成绩查询结果
  *
  * 注意各科成绩用 subjects 配置数组循环输出，对应数据表 custom_text1..N，
- * 不再像旧版那样逐个手写 $text1..$text9，增减科目只改配置即可。
  *
  * @var string $title
  * @var array  $subjects 科目名称数组
