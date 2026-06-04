@@ -1,0 +1,13 @@
+# 把不存在的文件/目录的请求统一改写到 index.php，交给框架路由处理
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 已存在的真实文件或目录，直接访问
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # 其余请求一律交给入口
+    RewriteRule ^ index.php [L]
+</IfModule>

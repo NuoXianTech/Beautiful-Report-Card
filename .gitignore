@@ -1,0 +1,14 @@
+# 框架本地配置（含数据库与后台密码），切勿提交
+/config/config.php
+
+# 运行时产生的缓存与日志
+/storage/cache/*
+/storage/logs/*
+!/storage/cache/.gitkeep
+!/storage/logs/.gitkeep
+
+# 依赖与杂项
+/vendor/
+*.log
+.DS_Store
+Thumbs.db

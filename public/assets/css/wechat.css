@@ -1,0 +1,27 @@
+#detail-box {
+    margin: 20px;
+}
+#detail-box ul {
+    list-style: none;
+}
+
+#detail-box li {
+    color: #505050;
+}
+#detail-box li span {
+    text-align: left;
+    width: 120px;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+#detail-box h1 {
+    text-align: center;
+}
+#detail-box p {
+    color: #505050;
+    text-indent: 2em;
+    border: 1px solid #e7e7e7;
+    padding: 10px;
+    line-height: 1.8;
+}
