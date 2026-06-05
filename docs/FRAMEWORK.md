@@ -21,6 +21,7 @@
 ├─ public/                       # Web 根目录（DocumentRoot 指向这里）
 │  ├─ index.php                  #   唯一入口（Front Controller）
 │  ├─ .htaccess                  #   Apache 重写规则
+│  ├─ nginx.conf                 #   Nginx 伪静态示例（与 .htaccess 等价）
 │  ├─ favicon.ico
 │  └─ assets/css/                #   default.css / wechat.css
 │
@@ -215,7 +216,7 @@ layout('layouts/app') → 先 Views/<theme>/layouts/app.php，再 Views/layouts/
 **部署方式**
 
 - **Apache**：`DocumentRoot` 指向 `public/`，启用 `mod_rewrite`（`.htaccess` 已就绪）。
-- **Nginx**：`root` 指向 `public/`，非真实文件请求 `try_files $uri /index.php`。
+- **Nginx**：`root` 指向 `public/`；伪静态规则见 [`public/nginx.conf`](../public/nginx.conf)（与 `.htaccess` 等价，含完整 `server` 示例）。
 - **子目录**：安装向导的「子目录路径」填 `/Beautiful-Report-Card`，或安装后在 `config.php` 设 `'base_url'`。
   注意：子目录部署建议先用根路径完成安装（安装阶段尚无 base_url 配置）。
 
