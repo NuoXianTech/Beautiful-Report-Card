@@ -8,7 +8,6 @@ on:
     branches:
       - main
       - release
-  workflow_dispatch:        # 允许在 Actions 页手动触发
 
 # semantic-release 通过 GITHUB_TOKEN 创建 tag 与 GitHub Release，需要写权限
 permissions:
@@ -30,8 +29,5 @@ jobs:
         uses: cycjimmy/semantic-release-action@v6
         with:
           semantic_version: 24    # 锁定 semantic-release 大版本，避免 @latest 漂移；删掉此行则用最新版
-          extra_plugins: |        # changelog/git 非内置插件，需在此预装（且已写进 .releaserc.json 的 plugins）
-            @semantic-release/changelog@6
-            @semantic-release/git@10
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
