@@ -43,13 +43,13 @@ jobs:
           echo "version_bump: ${{ inputs.version_bump }}"
           echo "promote_from: ${{ inputs.promote_from }}"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.promote_from }}
 
       - name: Create release
         id: release
-        uses: benwoo1110/semantic-release-action@v1
+        uses: benwoo1110/semantic-release-action@v6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_mode: ${{ inputs.release_mode }}
