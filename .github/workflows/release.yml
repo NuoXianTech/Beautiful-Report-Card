@@ -1,0 +1,37 @@
+name: Release
+
+# 推送到 main    → 发布 beta 预发布版(如 0.2.0-beta.1）
+# 推送到 release → 发布正式版（如 0.2.0）
+# 版本号由 commit message 自动推断，需遵循 Conventional Commits（feat: / fix: / BREAKING CHANGE）
+on:
+  push:
+    branches:
+      - main
+      - release
+  workflow_dispatch:        # 允许在 Actions 页手动触发
+
+# semantic-release 通过 GITHUB_TOKEN 创建 tag 与 GitHub Release，需要写权限
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0          # 必须拉取完整历史与全部 tag，否则无法判断上次发布的版本
+          persist-credentials: false
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          semantic_version: 24    # 锁定 semantic-release 大版本，避免 @latest 漂移；删掉此行则用最新版
+          extra_plugins: |        # changelog/git 非内置插件，需在此预装（且已写进 .releaserc.json 的 plugins）
+            @semantic-release/changelog@6
+            @semantic-release/git@10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
