@@ -42,20 +42,20 @@
 * MySQL **5.7+**（UTF-8 / utf8mb4）
 
 ## 安装方法
-1. 下载源码到服务器。
-2. 复制配置：`cp config/config.sample.php config/config.php`，填写数据库连接。
-3. 导入数据库：将 `sql/result.sql` 导入 MySQL。
-4. （推荐）生成后台密码哈希：`php tools/make-password.php 你的密码`，填入 `config/config.php` 的 `admin.password_hash`。
-5. 将站点根目录（DocumentRoot）指向 **`public/`** 并启用 URL 重写；或本地快速启动：
+本项目内置 **Web 安装向导**，无需手动改配置或导数据库。
+
+1. 下载源码，将站点根目录（DocumentRoot）指向 **`public/`** 并启用 URL 重写；本地可快速启动：
    ```bash
    php -S localhost:8000 -t public public/index.php
    ```
-6. 访问首页查询；后台位于 `/admin`（默认密码 `admin123`，**请尽快修改**）。
+2. 浏览器访问站点，会**自动跳转到安装向导** `/install`。
+3. 在向导中填写 MySQL 连接、站点信息、后台密码，点击「开始安装」——
+   向导会自动建库、建表并生成 `config/config.php`。
+4. 安装完成后向导自动关闭：前台即可查询，后台 `/admin` 用刚设置的密码登录。
+
+> 仅支持 MySQL；需保证 `config/` 目录可写（用于生成配置）。进阶用户也可手动复制 `config/config.sample.php` 为 `config/config.php` 跳过向导。
 
 > Apache / Nginx / 子目录部署的详细说明见 [docs/FRAMEWORK.md](docs/FRAMEWORK.md)。
-
-## 演示数据
-导入演示表后可用：**考生号 `202101`**、**身份证号后六位 `233333`**。
 
 ## 目录结构
 ```

@@ -32,6 +32,13 @@ class App
 
         $request = new Request();
 
+        // 安装守卫：未安装则强制进入安装向导；已安装则禁止再次访问 /install
+        $guard = $this->installGuard($request);
+        if ($guard !== null) {
+            $guard->send();
+            return;
+        }
+
         try {
             $result = $this->router->dispatch($request);
         } catch (HttpResponseException $e) {
@@ -42,6 +49,21 @@ class App
         }
 
         $this->toResponse($result)->send();
+    }
+
+    /** 安装守卫：未安装放行 /install 并拦截其余请求；已安装则禁止再次访问 /install。 */
+    private function installGuard(Request $request): ?Response
+    {
+        $isInstallPath = ($request->path() === '/install');
+        $installed     = Installer::isInstalled();
+
+        if (!$installed && !$isInstallPath) {
+            return (new Response())->redirect(base_url('/install'));
+        }
+        if ($installed && $isInstallPath) {
+            return (new Response())->redirect(base_url('/'));
+        }
+        return null;
     }
 
     /** 把控制器返回值统一为 Response 对象。 @param mixed $result */

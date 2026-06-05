@@ -8,6 +8,10 @@
  * @var Core\Router $router
  */
 
+// ---- 安装向导（仅未安装时可访问，由 Core\App 安装守卫控制）----
+$router->get('/install',  'InstallController@show');
+$router->post('/install', 'InstallController@install');
+
 // ---- 前台：成绩查询 ----
 $router->get('/', 'HomeController@index');   // 查询表单
 $router->post('/', 'HomeController@query');  // 提交查询

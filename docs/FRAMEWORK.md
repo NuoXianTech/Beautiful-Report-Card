@@ -36,6 +36,7 @@
 │  ├─ Config.php                 #   配置容器（点号读取）
 │  ├─ Session.php                #   会话封装（HttpOnly/SameSite + CSRF 令牌）
 │  ├─ Auth.php                   #   后台登录态（password_hash / session）
+│  ├─ Installer.php              #   安装器（建库/建表/生成配置，仅 MySQL）
 │  ├─ Http/
 │  │  └─ HttpResponseException.php  # 携带响应的异常（鉴权跳转 / 403）
 │  └─ helpers.php                #   e / config / view / asset / redirect / csrf_field
@@ -43,6 +44,7 @@
 ├─ app/
 │  ├─ Controllers/
 │  │  ├─ HomeController.php       #   前台：成绩查询
+│  │  ├─ InstallController.php    #   安装向导（仅未安装时可用）
 │  │  └─ Admin/                   #   后台
 │  │     ├─ AdminController.php   #     鉴权基类（构造即校验登录 + CSRF）
 │  │     ├─ AuthController.php    #     登录 / 登出
@@ -57,7 +59,8 @@
 │     ├─ partials/copyright.php   #   共享组件
 │     ├─ default/                 #   前台默认主题（query / result）
 │     ├─ wechat/                  #   前台微信主题（含自己的 layouts）
-│     └─ admin/                   #   后台视图（layouts / partials / students）
+│     ├─ admin/                   #   后台视图（layouts / partials / students）
+│     └─ install/                 #   安装向导页面（index / success）
 │
 ├─ config/
 │  ├─ config.sample.php           # 配置模板（提交到仓库）
@@ -82,6 +85,7 @@
   → bootstrap.php                 （定义常量、注册自动加载、载入配置、错误处理）
   → Core\App::run()
       → 载入 routes/web.php        （注册路由）
+      → 安装守卫：未安装 → 跳转 /install；已安装访问 /install → 跳转首页
       → Router::dispatch(Request)  （匹配路径 → 实例化控制器 → 调用方法）
       → 控制器返回 Response（或抛出 HttpResponseException 由 App 捕获）
   → Response::send()              （输出状态码、响应头、响应体）
@@ -109,6 +113,7 @@
 
 | 方法 | 路径 | 处理器 | 说明 |
 |---|---|---|---|
+| GET / POST | `/install` | `InstallController@show / install` | 安装向导（仅未安装时可用） |
 | GET | `/` | `HomeController@index` | 查询表单 |
 | POST | `/` | `HomeController@query` | 提交查询 |
 | GET | `/admin/login` | `Admin/AuthController@showLogin` | 登录页 |
@@ -149,6 +154,7 @@ layout('layouts/app') → 先 Views/<theme>/layouts/app.php，再 Views/layouts/
 | 凭据泄露 | `config.php` 被 `.gitignore`，仅提交模板 | `.gitignore`、`config/` |
 | 报错外泄 | 调试/生产分离；生产写日志不外显 | `bootstrap.php`、`core/App.php` |
 | IP 外泄 | 移除旧版「把访客 IP 外链第三方查询站」的功能 | `Admin/DashboardController` |
+| 重复安装 | 已安装（config.php 存在）后安装向导自动失效 | `core/Installer.php`、`core/App.php` |
 
 ---
 
@@ -196,31 +202,35 @@ layout('layouts/app') → 先 Views/<theme>/layouts/app.php，再 Views/layouts/
 
 ## 安装与运行
 
-1. 准备数据库（MySQL 5.7+），导入 `sql/result.sql`。
-2. 复制配置：`cp config/config.sample.php config/config.php`，填写数据库连接。
-3. 启动：
+推荐用**内置安装向导**完成初始化（仅支持 MySQL）：
 
-   **PHP 内置服务器（最快验证）**
+1. 将 Web 根目录指向 `public/` 并启用重写，或本地启动：
    ```bash
    php -S localhost:8000 -t public public/index.php
    ```
-   访问 http://localhost:8000
+2. 访问站点 → 自动跳转 `/install` → 填写 MySQL 连接、站点信息、后台密码 → 点「开始安装」。
+   向导会自动建库、建表，并生成 `config/config.php`（需 `config/` 目录可写）。
+3. 安装完成后向导自动失效，前台与后台即可使用。
 
-   **Apache**：`DocumentRoot` 指向 `public/`，启用 `mod_rewrite`（`.htaccess` 已就绪）。
+**部署方式**
 
-   **Nginx**：`root` 指向 `public/`，将非真实文件请求 `try_files $uri /index.php`。
+- **Apache**：`DocumentRoot` 指向 `public/`，启用 `mod_rewrite`（`.htaccess` 已就绪）。
+- **Nginx**：`root` 指向 `public/`，非真实文件请求 `try_files $uri /index.php`。
+- **子目录**：安装向导的「子目录路径」填 `/Beautiful-Report-Card`，或安装后在 `config.php` 设 `'base_url'`。
+  注意：子目录部署建议先用根路径完成安装（安装阶段尚无 base_url 配置）。
 
-   **子目录部署**：通过 `http://host/Beautiful-Report-Card/` 访问时，在 `config.php` 设 `'base_url' => '/Beautiful-Report-Card'`。
+> 手动安装（跳过向导）：复制 `config/config.sample.php` 为 `config/config.php` 并填写，再导入 `sql/result.sql`。
 
 ---
 
 ## 验证清单
 
-1. 访问 `/` → 显示成绩查询表单。
-2. 用演示数据查询：**考生号 `202101`**、**身份证后六位 `233333`** → 显示成绩表格。
+0. 首次访问任意页面（尚无 `config.php`）→ 自动跳转 `/install`；填表提交后自动建库建表并生成配置。
+1. 安装完成后访问 `/admin` → 用安装时设置的密码登录 → 添加一名学生。
+2. 访问 `/` → 用刚添加学生的考生号 + 身份证后六位查询 → 显示成绩表格。
 3. 留空或乱填 → 友好错误提示（不会发生 SQL 注入）。
-4. 访问 `/admin` → 跳转登录页；用 `admin123` 登录 → 进入后台。
-5. 后台添加 / 编辑 / 删除学生 → 列表实时变化；删除带二次确认与 CSRF 校验。
-6. 把 `config.php` 的 `app.theme` 改为 `wechat` → 前台切换为微信主题。
+4. 后台编辑 / 删除学生 → 列表实时变化；删除带二次确认与 CSRF 校验。
+5. 把 `config.php` 的 `app.theme` 改为 `wechat` → 前台切换为微信主题。
 
+> 如需演示数据，可手动导入 `sql/result.sql`（考生 202101 / 202102）。
 > 注：本框架未随附自动化测试；以上为手动验证步骤。

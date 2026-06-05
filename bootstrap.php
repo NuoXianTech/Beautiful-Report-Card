@@ -41,18 +41,15 @@ spl_autoload_register(function (string $class): void {
 require CORE_PATH . '/helpers.php';
 
 // ---- 加载配置 ----
+// 未安装时 config.php 尚不存在：加载空配置，交由安装向导处理（见 Core\App 安装守卫）。
 $configFile = CONFIG_PATH . '/config.php';
-if (!is_file($configFile)) {
-    http_response_code(500);
-    exit('缺少配置文件 config/config.php，请复制 config/config.sample.php 为 config.php 并填写。');
-}
-\Core\Config::load(require $configFile);
+\Core\Config::load(is_file($configFile) ? require $configFile : []);
 
 // ---- 时区 ----
 date_default_timezone_set(\Core\Config::get('app.timezone', 'PRC'));
 
-// ---- 错误处理：调试模式直接显示，生产模式写入日志 ----
-if (\Core\Config::get('app.debug', false)) {
+// ---- 错误处理：调试模式直接显示，生产模式写入日志（未安装时也开启显示，便于排错） ----
+if (\Core\Config::get('app.debug', false) || !is_file($configFile)) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
 } else {
