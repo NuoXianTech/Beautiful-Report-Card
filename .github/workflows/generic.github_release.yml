@@ -51,7 +51,7 @@ jobs:
         id: release
         uses: cycjimmy/semantic-release-action@v6
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          release_mode: ${{ inputs.release_mode }}
-          version_bump: ${{ inputs.version_bump }}
-          promote_from: ${{ inputs.promote_from }}
+          branch: ${{ inputs.promote_from || github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_MODE: ${{ inputs.release_mode }}
