@@ -50,8 +50,7 @@ jobs:
       - name: Create release
         id: release
         uses: cycjimmy/semantic-release-action@v6
-        with:
-          branch: ${{ inputs.promote_from || github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_MODE: ${{ inputs.release_mode }}
+          RELEASE_BRANCH: ${{ inputs.promote_from || github.ref_name }}
