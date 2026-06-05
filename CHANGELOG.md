@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.1.1-beta.1](https://github.com/NuoXianTech/Beautiful-Report-Card/compare/0.1.0...0.1.1-beta.1) (2026-06-05)
+
+
+### Bug Fixes
+
+* update semantic-release action to NuoXianTech version and streamline parameters ([7714d04](https://github.com/NuoXianTech/Beautiful-Report-Card/commit/7714d04ab56d78051671b989f825fd8386cc7bd2))
+* 删除多个 GitHub Actions 工作流文件 ([c55b871](https://github.com/NuoXianTech/Beautiful-Report-Card/commit/c55b871aa39abe6c7c4ac769fc3a1bd68764237a))
+* 添加 GitHub Actions 工作流和配置文件以支持语义化发布 ([3c9d8cf](https://github.com/NuoXianTech/Beautiful-Report-Card/commit/3c9d8cf2e74599c92e9c6efbc863c9b321cf61ff))
+
 ## Unreleased
 
 + [修复] 更正检测更新地址
