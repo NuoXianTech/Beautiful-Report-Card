@@ -21,15 +21,15 @@
 
 <table width="100%">
   <tr>
-    <td width="50%"><img src="https://mpimg.cn/view.php/e6c7e09d7f463caa421384a871c2b002.png" alt="image" border="0"></td>
-    <td width="50%"><img src="https://mpimg.cn/view.php/2fb50a27410530ce40cf606ab79cd7c3.png" alt="image edit" border="0"></td>
+    <td width="50%"><img src="docs/image/default image1.png" alt="default image1" border="0"></td>
+    <td width="50%"><img src="docs/image/default image2.png" alt="default image2" border="0"></td>
   </tr>
   <tr>
-    <td width="50%"><img src="https://mpimg.cn/view.php/cbe2b8fdc0c7254cb2c76e6d59548f1b.png" alt="chery studio" border="0"></td>
-    <td width="50%"><img src="https://mpimg.cn/view.php/e897469a090a17214f66807ab616d2d5.png" alt="account pool" border="0"></td>
+    <td width="50%"><img src="docs/image/wechat image1.png" alt="wechat image1" border="0"></td>
+    <td width="50%"><img src="docs/image/wechat image2.png" alt="wechat image2" border="0"></td>
   </tr>
   <tr>
-    <td width="50%"><img src="https://mpimg.cn/view.php/b92d74347a3c571abc290f1b8f0efcbd.png" alt="new api" border="0"></td>
+    <td width="50%"><img src="docs/image/admin.png" alt="admin" border="0"></td>
   </tr>
 </table>
 
