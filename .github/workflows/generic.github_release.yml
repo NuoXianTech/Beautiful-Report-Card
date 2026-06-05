@@ -49,7 +49,7 @@ jobs:
 
       - name: Create release
         id: release
-        uses: NuoXianTech/semantic-release-action@v1.0.0
+        uses: NuoXianTech/semantic-release-action@v1.0.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_mode: ${{ inputs.release_mode }}
